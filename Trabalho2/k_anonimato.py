@@ -5,9 +5,8 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import pandas as pd
 
-# ============================================================
+
 # 1. CARREGAMENTO E LIMPEZA DOS DADOS
-# ============================================================
 
 nome_arquivo_json = "mapeamento_generalizacao.json"
 with open(nome_arquivo_json, "r", encoding="utf-8") as f:
@@ -18,7 +17,6 @@ mapeamento_data = mapeamento["data"]
 
 colunas = ["municipioCaso", "dataNascimento", "racaCor"]
 
-# Lê só as colunas necessárias (bem mais rápido/menos memória)
 df_covid = pd.read_csv(
     "Datasets/covid.csv",
     usecols=lambda c: c.strip() in colunas,
@@ -92,9 +90,7 @@ def _generalizar_coluna(serie, mapa, n_niveis, inicios, tamanhos):
     return saida, nivel_linha
 
 
-# ============================================================
 # 4. ALGORITMO K-ANONIMATO E PRECISÃO
-# ============================================================
 
 def anonimizar(df, k):
     dados = df.copy()
