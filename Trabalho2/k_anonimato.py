@@ -5,7 +5,6 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import pandas as pd
 
-
 # 1. CARREGAMENTO E LIMPEZA DOS DADOS
 
 nome_arquivo_json = "mapeamento_generalizacao.json"
@@ -51,11 +50,7 @@ max_nd = max(int(k.replace("nivel", "")) for k in mapeamento_data if k.startswit
 # 3. FUNÇÕES AUXILIARES
 
 def obter_classes_equivalencia(df):
-    return (
-        df.groupby(["municipioCaso", "dataNascimento"], dropna=False)
-        .size()
-        .reset_index(name="tamanho")
-    )
+    return (df.groupby(["municipioCaso", "dataNascimento"], dropna=False).size().reset_index(name="tamanho"))
 
 
 def verificar_k_anonimato(df, k):
@@ -183,6 +178,7 @@ if __name__ == "__main__":
     plt.grid(axis="y", linestyle="--", alpha=0.7)
     plt.tight_layout()
     plt.savefig(f"Histogramas/histograma_k_{k}.png")
+    plt.show()
     plt.close()
 
     print("\nProcesso concluído com sucesso!")

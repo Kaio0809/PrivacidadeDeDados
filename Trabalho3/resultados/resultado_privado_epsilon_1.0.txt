@@ -1,0 +1,9 @@
+Resultados kNN Privado - Laplace (Epsilon=1.0)
+
+Epsilon total: 1.0
+Epsilon por consulta (efetivo): 0.0000709824
+Sensibilidade (MCS): 7044
+Escala do ruído de Laplace: 14088.00
+Acurácia: 0.5138 (51.38%)
+Total de previsões: 13567
+Tempo total de execução: 8.29 segundos

@@ -1,0 +1,4 @@
+Resultados - kNN Tradicional (sem privacidade): 
+
+A acurácia do teste foi de 0.8171, o que equivale a 81.71% de acertos.
+Feitas 13567 previsões em 9.87 segundos.

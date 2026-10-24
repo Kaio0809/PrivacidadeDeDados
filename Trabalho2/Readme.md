@@ -4,6 +4,15 @@ Disciplina: Privacidade de Dados (2026-2)
 
 Implementação do modelo k-anonimato, conforme Sweeney (2002), por meio da generalização de valores de atributos semi-identificadores sobre o conjunto de dados `covid.csv`. O programa recebe o valor de k (2, 4, 8 ou 16), gera o dataset anonimizado correspondente e calcula a precisão, o tamanho médio das classes de equivalência e o histograma dos tamanhos das classes.
 
+## Alunos
+
+**Kaio Edmar Castro Barreto - 557246**   
+**Cauã de Freitas Souza - 554583**
+  
+    
+    
+
+
 ## Atributos considerados
 
 | Atributo | Papel |
