@@ -1,0 +1,217 @@
+RESULTADOS DO MECANISMO EXPONENCIAL
+==========================================================================================
+
+Registros de treino: 44222
+Registros de teste: 1000
+Classes: [0, 1]
+
+Raio: 0.5 | Epsilon: 0.1
+Epsilon individual: 0.000100
+Acurácia: 46.60%
+Tempo de contagem: 0.79 segundos
+Tempo do mecanismo: 0.03 segundos
+Tempo total: 0.83 segundos
+------------------------------------------------------------------------------------------
+Raio: 0.5 | Epsilon: 0.5
+Epsilon individual: 0.000500
+Acurácia: 50.50%
+Tempo de contagem: 0.79 segundos
+Tempo do mecanismo: 0.04 segundos
+Tempo total: 0.84 segundos
+------------------------------------------------------------------------------------------
+Raio: 0.5 | Epsilon: 1.0
+Epsilon individual: 0.001000
+Acurácia: 52.80%
+Tempo de contagem: 0.79 segundos
+Tempo do mecanismo: 0.03 segundos
+Tempo total: 0.83 segundos
+------------------------------------------------------------------------------------------
+Raio: 0.5 | Epsilon: 5.0
+Epsilon individual: 0.005000
+Acurácia: 52.70%
+Tempo de contagem: 0.79 segundos
+Tempo do mecanismo: 0.03 segundos
+Tempo total: 0.83 segundos
+------------------------------------------------------------------------------------------
+Raio: 0.5 | Epsilon: 10.0
+Epsilon individual: 0.010000
+Acurácia: 57.10%
+Tempo de contagem: 0.79 segundos
+Tempo do mecanismo: 0.03 segundos
+Tempo total: 0.83 segundos
+------------------------------------------------------------------------------------------
+Raio: 0.5 | Epsilon: 100.0
+Epsilon individual: 0.100000
+Acurácia: 66.70%
+Tempo de contagem: 0.79 segundos
+Tempo do mecanismo: 0.03 segundos
+Tempo total: 0.83 segundos
+------------------------------------------------------------------------------------------
+Raio: 1.0 | Epsilon: 0.1
+Epsilon individual: 0.000100
+Acurácia: 50.70%
+Tempo de contagem: 0.88 segundos
+Tempo do mecanismo: 0.04 segundos
+Tempo total: 0.92 segundos
+------------------------------------------------------------------------------------------
+Raio: 1.0 | Epsilon: 0.5
+Epsilon individual: 0.000500
+Acurácia: 51.10%
+Tempo de contagem: 0.88 segundos
+Tempo do mecanismo: 0.04 segundos
+Tempo total: 0.92 segundos
+------------------------------------------------------------------------------------------
+Raio: 1.0 | Epsilon: 1.0
+Epsilon individual: 0.001000
+Acurácia: 50.20%
+Tempo de contagem: 0.88 segundos
+Tempo do mecanismo: 0.05 segundos
+Tempo total: 0.93 segundos
+------------------------------------------------------------------------------------------
+Raio: 1.0 | Epsilon: 5.0
+Epsilon individual: 0.005000
+Acurácia: 52.00%
+Tempo de contagem: 0.88 segundos
+Tempo do mecanismo: 0.04 segundos
+Tempo total: 0.92 segundos
+------------------------------------------------------------------------------------------
+Raio: 1.0 | Epsilon: 10.0
+Epsilon individual: 0.010000
+Acurácia: 57.80%
+Tempo de contagem: 0.88 segundos
+Tempo do mecanismo: 0.04 segundos
+Tempo total: 0.92 segundos
+------------------------------------------------------------------------------------------
+Raio: 1.0 | Epsilon: 100.0
+Epsilon individual: 0.100000
+Acurácia: 66.80%
+Tempo de contagem: 0.88 segundos
+Tempo do mecanismo: 0.04 segundos
+Tempo total: 0.92 segundos
+------------------------------------------------------------------------------------------
+Raio: 1.5 | Epsilon: 0.1
+Epsilon individual: 0.000100
+Acurácia: 49.10%
+Tempo de contagem: 0.89 segundos
+Tempo do mecanismo: 0.03 segundos
+Tempo total: 0.92 segundos
+------------------------------------------------------------------------------------------
+Raio: 1.5 | Epsilon: 0.5
+Epsilon individual: 0.000500
+Acurácia: 54.70%
+Tempo de contagem: 0.89 segundos
+Tempo do mecanismo: 0.04 segundos
+Tempo total: 0.92 segundos
+------------------------------------------------------------------------------------------
+Raio: 1.5 | Epsilon: 1.0
+Epsilon individual: 0.001000
+Acurácia: 55.50%
+Tempo de contagem: 0.89 segundos
+Tempo do mecanismo: 0.04 segundos
+Tempo total: 0.92 segundos
+------------------------------------------------------------------------------------------
+Raio: 1.5 | Epsilon: 5.0
+Epsilon individual: 0.005000
+Acurácia: 59.50%
+Tempo de contagem: 0.89 segundos
+Tempo do mecanismo: 0.03 segundos
+Tempo total: 0.92 segundos
+------------------------------------------------------------------------------------------
+Raio: 1.5 | Epsilon: 10.0
+Epsilon individual: 0.010000
+Acurácia: 60.60%
+Tempo de contagem: 0.89 segundos
+Tempo do mecanismo: 0.04 segundos
+Tempo total: 0.93 segundos
+------------------------------------------------------------------------------------------
+Raio: 1.5 | Epsilon: 100.0
+Epsilon individual: 0.100000
+Acurácia: 64.80%
+Tempo de contagem: 0.89 segundos
+Tempo do mecanismo: 0.04 segundos
+Tempo total: 0.93 segundos
+------------------------------------------------------------------------------------------
+Raio: 2.0 | Epsilon: 0.1
+Epsilon individual: 0.000100
+Acurácia: 50.00%
+Tempo de contagem: 0.84 segundos
+Tempo do mecanismo: 0.04 segundos
+Tempo total: 0.87 segundos
+------------------------------------------------------------------------------------------
+Raio: 2.0 | Epsilon: 0.5
+Epsilon individual: 0.000500
+Acurácia: 52.50%
+Tempo de contagem: 0.84 segundos
+Tempo do mecanismo: 0.04 segundos
+Tempo total: 0.88 segundos
+------------------------------------------------------------------------------------------
+Raio: 2.0 | Epsilon: 1.0
+Epsilon individual: 0.001000
+Acurácia: 53.50%
+Tempo de contagem: 0.84 segundos
+Tempo do mecanismo: 0.03 segundos
+Tempo total: 0.87 segundos
+------------------------------------------------------------------------------------------
+Raio: 2.0 | Epsilon: 5.0
+Epsilon individual: 0.005000
+Acurácia: 59.10%
+Tempo de contagem: 0.84 segundos
+Tempo do mecanismo: 0.03 segundos
+Tempo total: 0.86 segundos
+------------------------------------------------------------------------------------------
+Raio: 2.0 | Epsilon: 10.0
+Epsilon individual: 0.010000
+Acurácia: 58.00%
+Tempo de contagem: 0.84 segundos
+Tempo do mecanismo: 0.03 segundos
+Tempo total: 0.86 segundos
+------------------------------------------------------------------------------------------
+Raio: 2.0 | Epsilon: 100.0
+Epsilon individual: 0.100000
+Acurácia: 61.50%
+Tempo de contagem: 0.84 segundos
+Tempo do mecanismo: 0.03 segundos
+Tempo total: 0.87 segundos
+------------------------------------------------------------------------------------------
+Raio: 6.0 | Epsilon: 0.1
+Epsilon individual: 0.000100
+Acurácia: 49.00%
+Tempo de contagem: 0.77 segundos
+Tempo do mecanismo: 0.03 segundos
+Tempo total: 0.80 segundos
+------------------------------------------------------------------------------------------
+Raio: 6.0 | Epsilon: 0.5
+Epsilon individual: 0.000500
+Acurácia: 49.90%
+Tempo de contagem: 0.77 segundos
+Tempo do mecanismo: 0.03 segundos
+Tempo total: 0.80 segundos
+------------------------------------------------------------------------------------------
+Raio: 6.0 | Epsilon: 1.0
+Epsilon individual: 0.001000
+Acurácia: 50.00%
+Tempo de contagem: 0.77 segundos
+Tempo do mecanismo: 0.04 segundos
+Tempo total: 0.81 segundos
+------------------------------------------------------------------------------------------
+Raio: 6.0 | Epsilon: 5.0
+Epsilon individual: 0.005000
+Acurácia: 50.00%
+Tempo de contagem: 0.77 segundos
+Tempo do mecanismo: 0.03 segundos
+Tempo total: 0.80 segundos
+------------------------------------------------------------------------------------------
+Raio: 6.0 | Epsilon: 10.0
+Epsilon individual: 0.010000
+Acurácia: 50.00%
+Tempo de contagem: 0.77 segundos
+Tempo do mecanismo: 0.03 segundos
+Tempo total: 0.80 segundos
+------------------------------------------------------------------------------------------
+Raio: 6.0 | Epsilon: 100.0
+Epsilon individual: 0.100000
+Acurácia: 50.00%
+Tempo de contagem: 0.77 segundos
+Tempo do mecanismo: 0.03 segundos
+Tempo total: 0.80 segundos
+------------------------------------------------------------------------------------------

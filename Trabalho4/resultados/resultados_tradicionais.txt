@@ -1,0 +1,22 @@
+Resultados - r-N Tradicional (sem privacidade)
+
+Raio: 0.5
+Acurácia: 0.7210 (72.10%)
+Tempo de execução: 0.70 segundos
+----------------------------------------
+Raio: 1
+Acurácia: 0.7190 (71.90%)
+Tempo de execução: 0.66 segundos
+----------------------------------------
+Raio: 1.5
+Acurácia: 0.6530 (65.30%)
+Tempo de execução: 0.68 segundos
+----------------------------------------
+Raio: 2
+Acurácia: 0.6210 (62.10%)
+Tempo de execução: 0.68 segundos
+----------------------------------------
+Raio: 6
+Acurácia: 0.5000 (50.00%)
+Tempo de execução: 0.77 segundos
+----------------------------------------
