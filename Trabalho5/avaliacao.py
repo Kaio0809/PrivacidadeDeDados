@@ -6,10 +6,12 @@ import matplotlib.pyplot as plt
 from cliente import gerar_relatorios, agrupar_idades
 from servidor import estimar_frequencias, estimar_consulta, estimar_consulta_bins
 
+# Define o diretório do projeto e a pasta onde os resultados serão armazenados.
 pasta = Path(__file__).resolve().parent
 saida = pasta / 'resultados'
 saida.mkdir(exist_ok=True)
 
+# Carrega o dataset e padroniza os tipos dos atributos utilizados.
 df = pd.read_csv(pasta / 'dados_censo.csv')
 
 df['idade'] = pd.to_numeric(df['idade'], errors='raise')
@@ -17,11 +19,14 @@ df['salario'] = df['salario'].astype('string').str.strip().str.replace(r'\s+', '
 
 
 
+# Organiza os registros como pares (idade, salário) e define o domínio da E1.
 df['idade'] = df['idade'].astype(int)
 dados = list(zip(df['idade'], df['salario']))
 dom_sal = ['<=50K', '>50K']
 dom_conj = [(idade, sal) for idade in range(17, 91) for sal in dom_sal]
 
+# Define as dez consultas do workload.
+# None indica que não existe restrição para o atributo correspondente.
 consultas = {
     'Q1': (30, 50, '>50K'), 'Q2': (None, 19, '<=50K'),
     'Q3': (60, None, '>50K'), 'Q4': (20, 30, '>50K'),
@@ -32,6 +37,15 @@ consultas = {
 
 
 def resposta_verdadeira(df, idade_min=None, idade_max=None, salario=None):
+    """
+    Calcula a resposta exata de uma consulta utilizando o dataset original.
+
+    Os filtros de idade e salário são opcionais e seguem os mesmos
+    parâmetros utilizados nas consultas privadas do servidor.
+
+    Os dados originais são utilizados somente para avaliar o erro
+    das estimativas produzidas pelos mecanismos.
+    """
     dados = df
     if idade_min is not None:
         dados = dados[dados['idade'] >= idade_min]
@@ -42,11 +56,15 @@ def resposta_verdadeira(df, idade_min=None, idade_max=None, salario=None):
     return len(dados)
 
 
+# Calcula as respostas verdadeiras apenas uma vez, pois não dependem do GRR.
+# Os experimentos utilizam quatro epsilons e dez sementes reproduzíveis.
 reais = {nome: resposta_verdadeira(df, *parametros) for nome, parametros in consultas.items()}
 epsilons = [0.5, 1.0, 2.0, 4.0]
 larguras = [2, 5, 10]
 sementes = np.random.default_rng(2026).choice(1_000_000, 10, replace=False).tolist()
 
+# Prepara as configurações experimentais.
+# E1 utiliza as idades originais; E2 utiliza bins de diferentes larguras.
 configuracoes = [('E1', 0, dados, dom_conj, None)]
 for largura in larguras:
     bins, dados_bins = agrupar_idades(dados, largura)
@@ -57,6 +75,8 @@ execucoes = []
 consultas_avaliadas = []
 n = len(df)
 
+# Executa dez repetições para cada combinação de estratégia e epsilon.
+# As mesmas sementes são reutilizadas para permitir comparações reproduzíveis.
 print(f'Indivíduos: {n} | Domínio E1: {len(dom_conj)}')
 print(f'Sementes: {sementes}')
 for estrategia, largura, entrada, dominio, bins in configuracoes:
@@ -64,16 +84,19 @@ for estrategia, largura, entrada, dominio, bins in configuracoes:
 
     for epsilon in epsilons:
         for repeticao, semente in enumerate(sementes, 1):
+            # O cliente gera os reports e o servidor estima as frequências.
             relatorios = gerar_relatorios(entrada, dominio, epsilon, semente)
             estimativas = estimar_frequencias(relatorios, dominio, epsilon)
             erros_sem, erros_com = [], []
 
+            # Responde às consultas usando o estimador correspondente à estratégia.
             for nome, parametros in consultas.items():
                 if estrategia == 'E1':
                     estimada = estimar_consulta(estimativas, *parametros)
                 else:
                     estimada = estimar_consulta_bins(estimativas, bins, *parametros)
 
+                # Compara a estimativa original com sua versão truncada em [0, n].
                 estimada_com = max(0, min(n, estimada))
                 real = reais[nome]
                 erro_sem = abs(real - estimada)
@@ -81,6 +104,7 @@ for estrategia, largura, entrada, dominio, bins in configuracoes:
                 erros_sem.append(erro_sem)
                 erros_com.append(erro_com)
 
+                # Armazena os resultados individuais das dez consultas.
                 consultas_avaliadas.append({
                     'estrategia': estrategia, 'bin': largura, 'epsilon': epsilon,
                     'repeticao': repeticao, 'semente': semente, 'consulta': nome,
@@ -88,6 +112,7 @@ for estrategia, largura, entrada, dominio, bins in configuracoes:
                     'erro_sem': erro_sem, 'erro_com': erro_com
                 })
 
+            # Calcula o MAE da repetição como a média dos dez erros absolutos.
             execucoes.append({
                 'estrategia': estrategia, 'bin': largura, 'epsilon': epsilon,
                 'repeticao': repeticao, 'semente': semente,
@@ -96,17 +121,24 @@ for estrategia, largura, entrada, dominio, bins in configuracoes:
 
         print(f'  epsilon {epsilon}: 10 repetições concluídas')
 
+# Organiza os resultados em DataFrames.
 df_exec = pd.DataFrame(execucoes)
 df_cons = pd.DataFrame(consultas_avaliadas)
+
+# Calcula a média e o desvio padrão do MAE entre as dez repetições.
+# Os resultados são separados por estratégia, largura do bin e epsilon.
 resumo = df_exec.groupby(['estrategia', 'bin', 'epsilon']).agg(
     mae_medio_sem=('mae_sem', 'mean'), desvio_sem=('mae_sem', 'std'),
     mae_medio_com=('mae_com', 'mean'), desvio_com=('mae_com', 'std')
 ).reset_index()
+
+# Calcula as mesmas estatísticas individualmente para cada consulta.
 resumo_cons = df_cons.groupby(['estrategia', 'bin', 'epsilon', 'consulta']).agg(
     mae_medio_sem=('erro_sem', 'mean'), mae_medio_com=('erro_com', 'mean'),
     desvio_sem=('erro_sem', 'std'), desvio_com=('erro_com', 'std')
 ).reset_index()
 
+# Identifica a largura de bin com menor MAE médio para cada epsilon na E2.
 melhores = resumo[resumo['estrategia'] == 'E2']
 melhores = melhores.loc[melhores.groupby('epsilon')['mae_medio_com'].idxmin()].sort_values('epsilon')
 
@@ -116,11 +148,14 @@ print('\nMELHOR BIN POR EPSILON (COM TRUNCAMENTO)')
 print(melhores[['epsilon', 'bin', 'mae_medio_com']].round(2).to_string(index=False))
 print(f'\nExecuções: {len(df_exec)} | Consultas avaliadas: {len(df_cons)} | Sementes: {df_exec.semente.nunique()}')
 
+# Verifica se todas as configurações tiveram dez execuções
+# e se o número de consultas avaliadas está correto.
 assert len(df_exec) == (1 + len(larguras)) * len(epsilons) * len(sementes)
 assert len(df_cons) == len(df_exec) * len(consultas)
 assert df_exec['semente'].nunique() == 10
 assert (df_exec.groupby(['estrategia', 'bin', 'epsilon']).size() == 10).all()
 
+# Salva as execuções, os erros por consulta e os resultados agregados.
 df_exec.to_csv(saida / 'execucoes.csv', index=False)
 df_cons.to_csv(saida / 'consultas.csv', index=False)
 resumo.to_csv(saida / 'resumo_mae.csv', index=False)
@@ -128,6 +163,8 @@ resumo_cons.to_csv(saida / 'resumo_consultas.csv', index=False)
 melhores.to_csv(saida / 'melhores_bins.csv', index=False)
 pd.DataFrame({'semente': sementes}).to_csv(saida / 'sementes.csv', index=False)
 
+# Gera os gráficos do MAE em função do epsilon para E1 e E2.
+# As barras de erro representam o desvio padrão das dez repetições.
 for tipo in ['sem', 'com']:
     plt.figure(figsize=(9, 5))
     for (estrategia, largura), grupo in resumo.groupby(['estrategia', 'bin'], sort=False):
@@ -144,6 +181,8 @@ for tipo in ['sem', 'com']:
     plt.savefig(saida / f'mae_epsilon_{tipo}.png', dpi=300)
     plt.close()
 
+# Compara o MAE da E2 entre as larguras de bin avaliadas.
+# Cada linha representa um valor diferente de epsilon.
 plt.figure(figsize=(9, 5))
 for epsilon in epsilons:
     grupo = resumo[(resumo['estrategia'] == 'E2') & (resumo['epsilon'] == epsilon)].sort_values('bin')
@@ -158,6 +197,8 @@ plt.tight_layout()
 plt.savefig(saida / 'mae_bins.png', dpi=300)
 plt.close()
 
+# Seleciona o melhor bin da E2 para epsilon = 1.
+# As consultas são ordenadas numericamente para o gráfico comparativo.
 bin_escolhido = int(melhores.loc[melhores['epsilon'] == 1.0, 'bin'].iloc[0])
 ordem = [f'Q{i}' for i in range(1, 11)]
 e1 = resumo_cons[(resumo_cons['estrategia'] == 'E1') & (resumo_cons['epsilon'] == 1.0)]
@@ -165,6 +206,8 @@ e2 = resumo_cons[(resumo_cons['estrategia'] == 'E2') & (resumo_cons['epsilon'] =
 e1 = e1.set_index('consulta').loc[ordem]
 e2 = e2.set_index('consulta').loc[ordem]
 
+# Compara o MAE médio de cada consulta entre E1 e E2.
+# O gráfico utiliza as respostas com truncamento.
 x = np.arange(10)
 plt.figure(figsize=(11, 5))
 plt.bar(x - 0.2, e1['mae_medio_com'], 0.4, label='E1')
